@@ -171,14 +171,16 @@ class ProviderRegistry(
         aiProviderDao.upsert(row.copy(customBaseUrl = baseUrl, updatedAt = now()))
     }
 
-    suspend fun testConnection(id: String): Boolean = try {
-        val row = aiProviderDao.getById(id) ?: return false
-        val apiKey = secureStorage.get(SecureStorage.apiKeyFor(id))
-        if (apiKey.isNullOrBlank()) return false
-        val model = row.defaultModel.ifBlank { settings.settings.first().plannerModel }
-        buildProvider(id, row.customBaseUrl).testConnection(apiKey, model)
-    } catch (e: Exception) {
-        logger.w("ProviderRegistry", "testConnection($id) failed: ${e.message}")
-        false
+    suspend fun testConnection(id: String): Boolean {
+        return try {
+            val row = aiProviderDao.getById(id) ?: return false
+            val apiKey = secureStorage.get(SecureStorage.apiKeyFor(id))
+            if (apiKey.isNullOrBlank()) return false
+            val model = row.defaultModel.ifBlank { settings.settings.first().plannerModel }
+            buildProvider(id, row.customBaseUrl).testConnection(apiKey, model)
+        } catch (e: Exception) {
+            logger.w("ProviderRegistry", "testConnection($id) failed: ${e.message}")
+            false
+        }
     }
 }
