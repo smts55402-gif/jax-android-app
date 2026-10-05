@@ -1,6 +1,7 @@
 package com.jax.automation.accessibility
 
 import android.accessibilityservice.AccessibilityService
+import android.accessibilityservice.GestureDescription
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -148,10 +149,10 @@ class AccessibilityAutomationAdapter(private val context: Context) : AutomationA
                 moveTo(x1.toFloat(), y1.toFloat())
                 lineTo(x2.toFloat(), y2.toFloat())
             }
-            val stroke = AccessibilityService.GestureDescription.StrokeDescription(
+            val stroke = GestureDescription.StrokeDescription(
                 path, 0, durationMs.toLong()
             )
-            val gesture = AccessibilityService.GestureDescription.Builder()
+            val gesture = GestureDescription.Builder()
                 .addStroke(stroke)
                 .build()
             val latch = CountDownLatch(1)
@@ -159,12 +160,12 @@ class AccessibilityAutomationAdapter(private val context: Context) : AutomationA
             val dispatched = svc.dispatchGesture(
                 gesture,
                 object : AccessibilityService.GestureResultCallback() {
-                    override fun onCompleted(gestureDescription: AccessibilityService.GestureDescription?) {
+                    override fun onCompleted(gestureDescription: GestureDescription?) {
                         completed = true
                         latch.countDown()
                     }
 
-                    override fun onCancelled(gestureDescription: AccessibilityService.GestureDescription?) {
+                    override fun onCancelled(gestureDescription: GestureDescription?) {
                         latch.countDown()
                     }
                 },
@@ -219,7 +220,7 @@ class AccessibilityAutomationAdapter(private val context: Context) : AutomationA
     }
 
     override suspend fun waitForText(text: String, timeoutMs: Long): ActionResult {
-        return try {
+        try {
             val svc = service() ?: return notEnabled()
             val deadline = SystemClock.uptimeMillis() + timeoutMs
             while (true) {
@@ -237,12 +238,12 @@ class AccessibilityAutomationAdapter(private val context: Context) : AutomationA
                 delay(300)
             }
         } catch (e: Exception) {
-            ActionResult(false, e.message ?: "Wait for text failed", ErrorCodes.UNKNOWN_SCREEN)
+            return ActionResult(false, e.message ?: "Wait for text failed", ErrorCodes.UNKNOWN_SCREEN)
         }
     }
 
     override suspend fun waitForElement(sel: Selector, timeoutMs: Long): ActionResult {
-        return try {
+        try {
             val svc = service() ?: return notEnabled()
             val deadline = SystemClock.uptimeMillis() + timeoutMs
             while (true) {
@@ -259,12 +260,12 @@ class AccessibilityAutomationAdapter(private val context: Context) : AutomationA
                 delay(300)
             }
         } catch (e: Exception) {
-            ActionResult(false, e.message ?: "Wait for element failed", ErrorCodes.UNKNOWN_SCREEN)
+            return ActionResult(false, e.message ?: "Wait for element failed", ErrorCodes.UNKNOWN_SCREEN)
         }
     }
 
     override suspend fun waitForElementGone(sel: Selector, timeoutMs: Long): ActionResult {
-        return try {
+        try {
             val svc = service() ?: return notEnabled()
             val deadline = SystemClock.uptimeMillis() + timeoutMs
             while (true) {
@@ -281,7 +282,7 @@ class AccessibilityAutomationAdapter(private val context: Context) : AutomationA
                 delay(300)
             }
         } catch (e: Exception) {
-            ActionResult(false, e.message ?: "Wait for element gone failed", ErrorCodes.UNKNOWN_SCREEN)
+            return ActionResult(false, e.message ?: "Wait for element gone failed", ErrorCodes.UNKNOWN_SCREEN)
         }
     }
 
