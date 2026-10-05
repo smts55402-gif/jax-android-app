@@ -68,6 +68,7 @@ class PromptBuilderTest {
         )
         val scene = Scene(
             projectId = "proj-1",
+            sceneId = "001",
             sceneIndex = 0,
             startTimeMs = 0,
             endTimeMs = 4000,

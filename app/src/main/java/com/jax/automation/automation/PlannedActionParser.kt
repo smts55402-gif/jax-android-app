@@ -42,7 +42,8 @@ object PlannedActionParser {
     }
 
     private fun parseAction(index: Int, obj: JSONObject): PlannedAction {
-        val name = optString(obj, "action").ifBlank {
+        val name = optString(obj, "action")
+        if (name.isNullOrBlank()) {
             throw IllegalArgumentException(
                 "PlannedActionParser: action at index $index missing 'action'"
             )
@@ -73,7 +74,7 @@ object PlannedActionParser {
             null
         }
 
-        val direction = optString(obj, "direction").ifBlank { null }?.let { raw ->
+        val direction = optString(obj, "direction")?.takeIf { it.isNotBlank() }?.let { raw ->
             try {
                 ScrollDirection.valueOf(raw)
             } catch (e: IllegalArgumentException) {

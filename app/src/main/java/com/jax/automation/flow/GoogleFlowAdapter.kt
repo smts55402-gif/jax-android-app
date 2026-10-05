@@ -582,7 +582,7 @@ class GoogleFlowAdapter(
         val genR = clickGenerate()
         if (!genR.ok) return fail("clickGenerate", genR, taskId, workDir)
 
-        val waitR = waitForGeneration(10 * 60 * 1000)
+        val waitR = waitForGeneration(10 * 60 * 1000L)
         if (!waitR.ok) return fail("waitForGeneration", waitR, taskId, workDir)
 
         val detectR = detectGeneratedResult()

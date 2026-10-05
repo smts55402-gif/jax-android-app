@@ -192,7 +192,7 @@ private fun AutomationModeRow(current: AutomationMode, onPick: (AutomationMode) 
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-                AutomationMode.values().forEach { mode ->
+                AutomationMode.entries.forEach { mode ->
                     DropdownMenuItem(
                         text = { Text(mode.name) },
                         onClick = {

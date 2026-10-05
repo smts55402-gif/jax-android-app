@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import kotlin.coroutines.currentCoroutineContext
 
 /**
  * Observable executor state. Active automation is reported as RUNNING,
@@ -208,7 +209,7 @@ class TaskExecutor(
             var counts = queue.counts(projectId)
             setState(RecoveryState.RUNNING, null, counts.total, counts.done, "Queue started")
             logger.i("TaskExecutor", "Run loop started for $projectId (${counts.total} tasks)")
-            while (coroutineContext.isActive) {
+            while (currentCoroutineContext().isActive) {
                 if (paused) awaitGate("Paused")
                 val task = queue.nextPending(projectId) ?: break
                 counts = queue.counts(projectId)

@@ -45,7 +45,7 @@ fun ReferencesScreen(container: AppContainer, navController: NavController) {
     val vm: ReferencesViewModel = viewModel(factory = JaxViewModelFactory(container))
     val category by vm.category.collectAsState()
     val items by vm.items.collectAsState()
-    val categories = remember { ReferenceCategory.values().toList() }
+    val categories = remember { ReferenceCategory.entries.toList() }
     var dialogItem by remember { mutableStateOf<ReferenceItem?>(null) }
     var showDialog by remember { mutableStateOf(false) }
 
@@ -177,7 +177,7 @@ private fun ReferenceDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    val base = existing ?: ReferenceItem(category = category)
+                    val base = existing ?: ReferenceItem(category = category, name = name.trim())
                     onSave(
                         base.copy(
                             category = category,

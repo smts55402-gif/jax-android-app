@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.view.Display
 import android.view.accessibility.AccessibilityEvent
@@ -71,7 +72,7 @@ class JaxAccessibilityService : AccessibilityService() {
     @RequiresApi(Build.VERSION_CODES.R)
     suspend fun takeScreenshotPng(timeoutMs: Long = 8000): ByteArray? =
         suspendCancellableCoroutine { cont ->
-            val handler = Handler(mainLooper)
+            val handler = Handler(Looper.getMainLooper())
             val executor = Executor { command -> handler.post(command) }
             val timeoutRunnable = Runnable {
                 if (cont.isActive) cont.resume(null)
