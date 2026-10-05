@@ -83,7 +83,7 @@ class JaxAccessibilityService : AccessibilityService() {
             takeScreenshot(
                 Display.DEFAULT_DISPLAY,
                 executor,
-                object : AccessibilityService.TakeScreenshotCallback() {
+                object : AccessibilityService.TakeScreenshotCallback {
                     override fun onSuccess(result: AccessibilityService.ScreenshotResult) {
                         handler.removeCallbacks(timeoutRunnable)
                         var bytes: ByteArray? = null
