@@ -21,7 +21,7 @@ import kotlin.coroutines.resume
  * The real on-device accessibility service backing automation.
  *
  * Exposes a process-wide singleton [instance] for the adapter. Event-driven
- * detection is intentionally a no-op — the adapter polls via [currentRoot].
+ * detection is intentionally a no-op - the adapter polls via [currentRoot].
  */
 class JaxAccessibilityService : AccessibilityService() {
 
@@ -83,8 +83,8 @@ class JaxAccessibilityService : AccessibilityService() {
             takeScreenshot(
                 Display.DEFAULT_DISPLAY,
                 executor,
-                object : ScreenshotCallback {
-                    override fun onSuccess(result: ScreenshotResult) {
+                object : AccessibilityService.TakeScreenshotCallback() {
+                    override fun onSuccess(result: AccessibilityService.ScreenshotResult) {
                         handler.removeCallbacks(timeoutRunnable)
                         var bytes: ByteArray? = null
                         try {
