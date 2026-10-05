@@ -1,0 +1,26 @@
+# Gradle / Android build outputs
+.gradle/
+build/
+**/build/
+local.properties
+*.iml
+
+# The binary wrapper jar is stored base64-encoded; CI restores it.
+gradle/wrapper/gradle-wrapper.jar
+
+# Keystores and secrets — the fixed debug.keystore is stored base64-encoded
+# (debug.keystore.b64; public android/android credentials, debug-only) and
+# restored by CI, so every build shares one debug signature.
+*.jks
+*.p12
+*.key
+debug.keystore
+secrets.properties
+*.env
+
+# IDE
+.idea/
+*.DS_Store
+
+# Derived / private user data (never commit)
+/e2e/
