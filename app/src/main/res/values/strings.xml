@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">JAX</string>
+    <string name="accessibility_service_description">JAX uses accessibility to automate repetitive UI steps in Chrome and Google Flow: finding fields and buttons, entering prompts, and detecting generation results. It never bypasses logins, CAPTCHAs, or platform protections — it pauses and asks you when manual action is required.</string>
+</resources>

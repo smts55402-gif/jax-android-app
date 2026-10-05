@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base theme for the Compose app: dark, no action bar. Actual colors
+         are defined in the Compose JaxTheme. -->
+    <style name="Theme.JAX" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/jax_background</item>
+        <item name="android:statusBarColor">@color/jax_background</item>
+        <item name="android:navigationBarColor">@color/jax_background</item>
+    </style>
+</resources>
