@@ -10,7 +10,7 @@ import com.jax.automation.models.TaskStatus
  * text (no JSON dependency needed in the persistence layer).
  */
 class Converters {
-    private val sep = ""
+    private val sep = "\u001f"
 
     @TypeConverter
     fun fromStringList(value: List<String>?): String =
